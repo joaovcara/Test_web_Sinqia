@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class PontoTuristico : Generic
+    public class PontoTuristico : Base
     {
         [Display(Name = "Nome")]
-        public string Name { get; set; }
+        public string? Nome { get; set; }
 
         [Display(Name = "Descrição")]
-        public string Description { get; set; }
+        public string? Descricao { get; set; }
 
         [Display(Name = "Localização")]
-        public string Location { get; set; }
+        public string? Localizacao { get; set; }
 
         [Display(Name = "CIdade")]
-        public string Cidade { get; set; }
+        public string? Cidade { get; set; }
 
         public int IdEstado { get; set; }
     }
