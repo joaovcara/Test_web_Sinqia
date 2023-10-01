@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces
 {
-    public interface IEstado : IBase<Estado>
+    public interface IEstadoRepository : IBase<Estado>
     {
     }
 }

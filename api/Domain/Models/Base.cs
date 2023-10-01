@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Generic
+    public class Base
     {
         [Display(Name = "Código")]
         public int Id { get; set; }
