@@ -19,7 +19,8 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection)
             {
-                string sql = $@"INSERT INTO {Entidade} (Sigla, Descricao) VALUES (@Sigla, @Descricao) ";
+                string sql = $@"INSERT INTO {Entidade} (Sigla, Descricao)
+                                VALUES (@Sigla, @Descricao) ";
                 int result = await conn.ExecuteAsync(sql, obj);
                 return result;
             }
@@ -29,7 +30,9 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection)
             {
-                string sql = $@"UPDATE {Entidade} SET Sigla = @Sigla, Descricao = @Descricao WHERE Id = @Id";
+                string sql = $@"UPDATE {Entidade} 
+                                SET Sigla = @Sigla, Descricao = @Descricao 
+                                WHERE Id = @Id";
                 int result = await conn.ExecuteAsync(sql, obj);
                 return result;
             }
@@ -59,7 +62,7 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection) 
             {
-                string sql = "SELECT * FROM Estado";
+                string sql = $@"SELECT * FROM {Entidade}";
                 List<Estado> estados = (await conn.QueryAsync<Estado>(sql)).ToList();
                 return estados;
             }
