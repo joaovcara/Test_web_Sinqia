@@ -3,10 +3,12 @@ import { Box, Drawer, List, ListItem, ListItemButton, ListItemText, ListItemIcon
 import MailIcon from '@mui/icons-material/Mail';
 import { Link } from 'react-router-dom'
 
+const widthAll = 250;
+
 export default function Sidebar(props) {
   const list = () => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: widthAll }}
       onClick={() => props.funcOpenSidebar(false)}
       onKeyDown={() => props.funcOpenSidebar(false)}
     >
@@ -16,7 +18,7 @@ export default function Sidebar(props) {
       </Grid>
       <List>
         <ListItem key={"Estado"} disablePadding>
-          <Link style={{textDecoration: "none", color:"#707070"}} to="/Estado">
+          <Link style={{textDecoration: "none", color:"#707070", width: widthAll}} to="/Estado">
             <ListItemButton>
               <ListItemIcon><MailIcon /></ListItemIcon>
               <ListItemText primary={"Estado"} />
@@ -24,7 +26,7 @@ export default function Sidebar(props) {
           </Link>
         </ListItem>
         <ListItem key={"PontoTuristico"} disablePadding>
-          <Link style={{textDecoration: "none", color:"#707070"}} to="/PontoTuristico">
+          <Link style={{textDecoration: "none", color:"#707070", width: widthAll}} to="/PontoTuristico">
             <ListItemButton>
               <ListItemIcon><MailIcon /></ListItemIcon>
               <ListItemText primary={"Ponto Turístico"} />
