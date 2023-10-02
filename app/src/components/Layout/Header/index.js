@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Logo from '../../../assets/img/Logo.png'
 
 export default function ButtonAppBar(props) {
   return (
@@ -8,7 +9,7 @@ export default function ButtonAppBar(props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            AQUI LOGO
+            <img src={Logo} height={50}></img>
           </Typography>
           <IconButton
             size="small"
