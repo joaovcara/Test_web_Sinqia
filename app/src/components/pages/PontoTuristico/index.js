@@ -1,7 +1,11 @@
+import PageGeneric from '../PageGeneric';
+
 function PagePontoTuristico() {
-    return (
-        <h1>Ponto Turistico</h1>
-    );
-  }
-  
+  return (
+    <PageGeneric title={"Ponto Turístico"}>
+
+    </PageGeneric>
+  );
+}
+
 export default PagePontoTuristico;

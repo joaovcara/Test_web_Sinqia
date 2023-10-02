@@ -6,10 +6,10 @@ import Logo from '../../../assets/img/Logo.png'
 export default function ButtonAppBar(props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <img src={Logo} height={50}></img>
+            <img src={Logo} height={50} alt='Logo'></img>
           </Typography>
           <IconButton
             size="small"

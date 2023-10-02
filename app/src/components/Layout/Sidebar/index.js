@@ -17,8 +17,16 @@ export default function Sidebar(props) {
         <Divider />
       </Grid>
       <List>
+        <ListItem key={"Home"} disablePadding>
+          <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/">
+            <ListItemButton>
+              <ListItemIcon><MailIcon /></ListItemIcon>
+              <ListItemText primary={"Home"} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
         <ListItem key={"Estado"} disablePadding>
-          <Link style={{textDecoration: "none", color:"#707070", width: widthAll}} to="/Estado">
+          <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/Estado">
             <ListItemButton>
               <ListItemIcon><MailIcon /></ListItemIcon>
               <ListItemText primary={"Estado"} />
@@ -26,7 +34,7 @@ export default function Sidebar(props) {
           </Link>
         </ListItem>
         <ListItem key={"PontoTuristico"} disablePadding>
-          <Link style={{textDecoration: "none", color:"#707070", width: widthAll}} to="/PontoTuristico">
+          <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/PontoTuristico">
             <ListItemButton>
               <ListItemIcon><MailIcon /></ListItemIcon>
               <ListItemText primary={"Ponto Turístico"} />

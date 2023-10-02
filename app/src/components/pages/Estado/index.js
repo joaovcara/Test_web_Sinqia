@@ -1,7 +1,13 @@
+import PageGeneric from '../PageGeneric';
+
 function PageEstado() {
-    return (
-        <h1>Estado</h1>
-    );
-  }
-  
+  return (
+    <PageGeneric 
+      title={"Estado"} 
+      columns={[]}
+      data={[]}
+    />
+  );
+}
+
 export default PageEstado;
