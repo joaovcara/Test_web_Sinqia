@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Drawer, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Typography, Divider, Grid } from '@mui/material';
-import MailIcon from '@mui/icons-material/Mail';
+import KayakingIcon from '@mui/icons-material/Kayaking';
+import HomeIcon from '@mui/icons-material/Home';
+import MapIcon from '@mui/icons-material/Map';
 import { Link } from 'react-router-dom'
 
 const widthAll = 250;
@@ -20,7 +22,7 @@ export default function Sidebar(props) {
         <ListItem key={"Home"} disablePadding>
           <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/">
             <ListItemButton>
-              <ListItemIcon><MailIcon /></ListItemIcon>
+              <ListItemIcon><HomeIcon /></ListItemIcon>
               <ListItemText primary={"Home"} />
             </ListItemButton>
           </Link>
@@ -28,7 +30,7 @@ export default function Sidebar(props) {
         <ListItem key={"Estado"} disablePadding>
           <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/Estado">
             <ListItemButton>
-              <ListItemIcon><MailIcon /></ListItemIcon>
+              <ListItemIcon><MapIcon /></ListItemIcon>
               <ListItemText primary={"Estado"} />
             </ListItemButton>
           </Link>
@@ -36,7 +38,7 @@ export default function Sidebar(props) {
         <ListItem key={"PontoTuristico"} disablePadding>
           <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/PontoTuristico">
             <ListItemButton>
-              <ListItemIcon><MailIcon /></ListItemIcon>
+              <ListItemIcon><KayakingIcon /></ListItemIcon>
               <ListItemText primary={"Ponto Turístico"} />
             </ListItemButton>
           </Link>

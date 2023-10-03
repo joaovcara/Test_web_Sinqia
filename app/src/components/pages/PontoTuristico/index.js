@@ -14,7 +14,7 @@ function PagePontoTuristico() {
   const columns = [
     {
       field: 'nome',
-      headerName: 'None',
+      headerName: 'Nome',
       flex: 1
     },
     {
@@ -33,6 +33,8 @@ function PagePontoTuristico() {
         setListPontoTuristico(result.data);     
       });
   }
+
+
 
   return (
     <PageGeneric 

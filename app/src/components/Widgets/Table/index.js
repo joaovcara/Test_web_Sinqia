@@ -13,13 +13,13 @@ export default function Table(props) {
       width: 135,
       renderCell: () => (
         <Grid container style={{ display: "flex", justifyContent: "space-between", textAlign: 'right' }}>
-          <Button sx={{width: "36px", minWidth: 36}} variant="contained" color="primary" onClick={() => props.funcView()}>
+          <Button sx={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} variant="contained" color="primary" onClick={() => props.funcView()}>
             <SearchIcon />
           </Button>
-          <Button sx={{width: "36px", minWidth: 36}} variant="contained" color="primary" onClick={() => props.funcUpdate()}>
+          <Button sx={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} variant="contained" color="primary" onClick={() => props.funcUpdate()}>
             <EditIcon />
           </Button>
-          <Button sx={{width: "36px", minWidth: 36}} variant="contained" color="secondary" onClick={() => props.funcDelete()}>
+          <Button sx={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} variant="contained" color="secondary" onClick={() => props.funcDelete()}>
             <DeleteIcon />
           </Button>
         </Grid>
