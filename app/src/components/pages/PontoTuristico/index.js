@@ -1,11 +1,13 @@
 import PageGeneric from '../PageGeneric';
 import api from '../../../services/api/api'
 import { useEffect, useState } from 'react';
+import Modal from '../../Widgets/Modal'
 
 const APIPontoTuristico = api("PontoTuristico");
 
 function PagePontoTuristico() {
   const [listPontoTuristico, setListPontoTuristico] = useState([])
+  const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
     getPontoTuristico()
@@ -34,18 +36,31 @@ function PagePontoTuristico() {
       });
   }
 
-
-
   return (
-    <PageGeneric 
-      title={"Ponto Turístico"} 
-      data={listPontoTuristico} 
-      columns={columns}
-      Add={() => alert("Insert")} 
-      Update={() => alert("Update")} 
-      Delete={() => alert("Delete")} 
-      View={() => alert("View")} 
+    <>
+      <PageGeneric 
+        title={"Ponto Turístico"} 
+        data={listPontoTuristico} 
+        columns={columns}
+        Add={() => setOpenModal(true)} 
+        Update={() => alert("Update")} 
+        Delete={() => alert("Delete")} 
+        View={() => alert("View")} 
       />
+      {
+        openModal && 
+        <Modal 
+          title={"Novo Ponto Turístico"}
+          openClose={openModal} 
+          funcOpenClose={setOpenModal}
+          content={
+            <div>
+              <p>Campos de cadastro</p>
+            </div>
+          }
+        />  
+      }
+    </>
   );
 }
 
