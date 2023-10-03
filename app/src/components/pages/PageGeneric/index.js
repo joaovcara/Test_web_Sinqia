@@ -8,7 +8,7 @@ function PageGeneric(props) {
       <Grid container justifyContent="space-between" flexWrap="nowrap">
         <div style={{ display: "flex", alignItems: "center", justifyContent:"space-between"}} >
           <Typography variant='h6' marginRight="10px">{props.title}</Typography>
-          <Button variant='contained'>
+          <Button variant='contained' onClick={() => props.Add()}>
             <Typography style={{textTransform: "none", marginRight: "10px"}} variant='subtitle2' >Adicionar</Typography>
             <AddIcon fontSize='small' />
           </Button>
@@ -16,7 +16,13 @@ function PageGeneric(props) {
         <TextField style={{ width: "40%" }} variant='filled' size='small' label="Pesquisar" id="fullWidth" />
       </Grid>
       <Grid container marginTop="10px">
-        <Table></Table>
+        <Table
+          data={props.data} 
+          columns={props.columns}
+          funcUpdate={props.Update}
+          funcDelete={props.Delete}
+          funcView={props.View}
+        />
       </Grid>
     </Grid>
   );

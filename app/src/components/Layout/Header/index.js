@@ -8,7 +8,7 @@ export default function ButtonAppBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, alignSelf: 'self-end' }}>
             <img src={Logo} height={50} alt='Logo'></img>
           </Typography>
           <IconButton

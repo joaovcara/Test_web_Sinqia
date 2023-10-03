@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Container from './Container';
 import Header from './Header'
 import Sidebar from './Sidebar';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PageEstado from '../pages/Estado'
 import PagePontoTuristico from '../pages/PontoTuristico'
 
