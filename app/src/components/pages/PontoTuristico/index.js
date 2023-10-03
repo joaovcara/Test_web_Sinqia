@@ -1,7 +1,7 @@
 import PageGeneric from '../PageGeneric';
 import api from '../../../services/api/api'
 import { useEffect, useState } from 'react';
-import Modal from '../../Widgets/Modal'
+import FormPontoTuristico from './Form';
 
 const APIPontoTuristico = api("PontoTuristico");
 
@@ -32,35 +32,25 @@ function PagePontoTuristico() {
   const getPontoTuristico = async () => {
     await APIPontoTuristico.get("GetAllPontoTuristico")
       .then(result => {
-        setListPontoTuristico(result.data);     
+        setListPontoTuristico(result.data);
       });
   }
 
   return (
-    <>
-      <PageGeneric 
-        title={"Ponto Turístico"} 
-        data={listPontoTuristico} 
-        columns={columns}
-        Add={() => setOpenModal(true)} 
-        Update={() => alert("Update")} 
-        Delete={() => alert("Delete")} 
-        View={() => alert("View")} 
-      />
-      {
-        openModal && 
-        <Modal 
-          title={"Novo Ponto Turístico"}
-          openClose={openModal} 
-          funcOpenClose={setOpenModal}
-          content={
-            <div>
-              <p>Campos de cadastro</p>
-            </div>
-          }
-        />  
+    <PageGeneric
+      title={"Ponto Turístico"}
+      data={listPontoTuristico}
+      columns={columns}
+      Add={() => setOpenModal(true)}
+      Update={() => alert("Update")}
+      Delete={() => alert("Delete")}
+      View={() => alert("View")}
+      openClose={openModal}
+      funcOpenClose={setOpenModal}
+      content={
+        <FormPontoTuristico />
       }
-    </>
+    />
   );
 }
 

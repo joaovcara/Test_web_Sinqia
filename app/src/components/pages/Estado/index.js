@@ -1,6 +1,6 @@
-import api from '../../../services/api/api'
 import { useEffect, useState } from 'react';
 import PageGeneric from '../PageGeneric';
+import api from '../../../services/api/api'
 
 const APIEstado = api("Estado");
 

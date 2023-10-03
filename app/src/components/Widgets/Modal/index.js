@@ -5,7 +5,7 @@ import { Dialog } from 'primereact/dialog';
 
 export default function Modal(props) {
   const footerContent = (
-    <Grid container justifyContent="flex-end">
+    <Grid container justifyContent="flex-end" style={{ marginTop: 10 }}>
       <Grid style={{ margin: 5 }}>
         <Button variant="contained" onClick={() => props.funcOpenClose(false)} >Cancelar</Button>
       </Grid>
@@ -17,8 +17,8 @@ export default function Modal(props) {
 
   return (
     <Grid>
-      <div style={{position: "fixed", top: 0, left: 0, width:  '100%', height: '100%', zIndex: 1, backgroundColor: 'rgba(0, 0, 0, 0.7)'}}></div>
-      <Dialog header={props.title} visible={props.openClose} style={{ width: '60vh', background: '#FFF', padding: 10, borderRadius: 5, boxShadow: "initial" }} onHide={() => props.funcOpenClose(false)} footer={footerContent}>
+      <div style={{ position: "fixed", top: 0, left: 0, width: '100%', height: '100%', zIndex: 1, backgroundColor: 'rgba(0, 0, 0, 0.7)' }}></div>
+      <Dialog header={props.title} visible={props.openClose} style={{ width: 'auto', maxWidth: '80vh', background: '#FFF', padding: 10, borderRadius: 5, boxShadow: "initial" }} onHide={() => props.funcOpenClose(false)} footer={footerContent}>
         {props.content}
       </Dialog>
     </Grid>
