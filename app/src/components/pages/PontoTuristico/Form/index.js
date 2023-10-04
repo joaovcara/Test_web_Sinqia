@@ -47,6 +47,23 @@ function FormPontoTuristico(props) {
         listEstado = await getEstado();
         let estadoSelectedObj = listEstado.filter(x => x.id === props.objClicked.idEstado);
         objEstadoClicado.sigla = estadoSelectedObj[0]?.sigla ?? '';
+
+        if(props.action === "View" || props.action === "Update"){
+            setCidade(props.objClicked.cidade);
+            setNome(props.objClicked.nome);
+            setDescricao(props.objClicked.descricao);
+            setLocalizacao(props.objClicked.localizacao);
+            setIdEstado(props.objClicked.idEstado)
+            setEstado(objEstadoClicado.sigla)
+        } else if(props.action === "Insert") {
+            setCidade('');
+            setNome('');
+            setDescricao('');
+            setLocalizacao('');
+            setIdEstado('')
+            setEstado('')
+        }
+
     }
 
     /**
@@ -54,7 +71,7 @@ function FormPontoTuristico(props) {
      */
     const getEstado = async () => {
         const response = await APIEstado.get("GetAllEstado");
-            return response.data;   
+        return response.data;
     }
 
     /**
@@ -169,6 +186,7 @@ function FormPontoTuristico(props) {
         const estado = listEstado.filter(x => x.sigla === value);
         setEstado(estado[0].sigla);
         setIdEstado(estado[0].id);
+        setCidade('');
     };
 
     const handleChangeCidade = (newValue) => {
@@ -183,8 +201,9 @@ function FormPontoTuristico(props) {
         return (
             <>
                 <TextField
+                    disabled={props.action === "View" ? true : false}
                     required={true}
-                    value={props.action === "View" || props.action === "Update" ? props.objClicked.nome : nome}
+                    value={nome}
                     onChange={(e) => setNome(e.target.value)}
                     error={!!validationErrors.nome}
                     helperText={validationErrors.nome}
@@ -195,8 +214,9 @@ function FormPontoTuristico(props) {
                     variant="outlined"
                 />
                 <TextField
+                    disabled={props.action === "View" ? true : false}
                     required={true}
-                    value={props.action === "View" || props.action === "Update" ? props.objClicked.descricao : descricao}
+                    value={descricao}
                     onChange={(e) => setDescricao(e.target.value)}
                     error={!!validationErrors.descricao}
                     helperText={validationErrors.descricao}
@@ -207,8 +227,9 @@ function FormPontoTuristico(props) {
                     variant="outlined"
                 />
                 <TextField
+                    disabled={props.action === "View" ? true : false}
                     required={true}
-                    value={props.action === "View" || props.action === "Update" ? props.objClicked.localizacao : localizacao}
+                    value={localizacao}
                     onChange={(e) => setLocalizacao(e.target.value)}
                     error={!!validationErrors.localizacao}
                     helperText={validationErrors.localizacao}
@@ -219,7 +240,7 @@ function FormPontoTuristico(props) {
                     variant="outlined"
                 />
                 <Grid display="flex">
-                    <FormControl required={true} style={{ marginTop: 10, flex: 1 }} size="small" error={!!validationErrors.estado}>
+                    <FormControl disabled={props.action === "View" ? true : false} required={true} style={{ marginTop: 10, flex: 1 }} size="small" error={!!validationErrors.estado}>
                         <InputLabel>Estado</InputLabel>
                         <Select
                             value={sigla}
@@ -237,7 +258,7 @@ function FormPontoTuristico(props) {
                         )}
                     </FormControl>
                     <Autocomplete
-                        disabled={listCidades.length > 0 ? false : true}
+                        disabled={props.action === "View" ? true : false}
                         size="small"
                         options={listCidades}
                         value={cidade ?? undefined}
