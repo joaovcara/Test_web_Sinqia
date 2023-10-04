@@ -7,7 +7,10 @@ import Notify from "../../../Widgets/Notify";
 const APIEstado = api("Estado");
 const APIPontoTuristico = api("PontoTuristico");
 
-function FormPontoTuristico() {
+function FormPontoTuristico(props) {
+    //const [actionUser, setActionUser] = useState('');
+    //const objClicked = props.objClicked;
+
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [localizacao, setLocalizacao] = useState('');
@@ -40,15 +43,34 @@ function FormPontoTuristico() {
         });
     }, [estado])
 
+    // const handleEventTable = (action) => {
+    //     console.log(props.action)
+    // }
+
     /**
      * Função para recuperar dados dos estados da API
      */
     const getEstado = async () => {
-        APIEstado.get("GetAllEstado")
+        await APIEstado.get("GetAllEstado")
             .then(result =>
                 setListEstado(result.data)
             );
     }
+
+    // const handleIsView = () => {
+    //     setNome(objClicked.nome);
+    //     setDescricao(objClicked.descricao);
+    //     setLocalizacao(objClicked.localizacao);
+    //     setEstado();
+    //     setIdEstado(0);
+    //     setCidade('');
+    // }
+
+    // const handleIsUpdate = () => {
+    // }
+
+    // const handleIsDelete = () => {
+    // }
 
     /**
      * Validação do formulário
@@ -100,7 +122,7 @@ function FormPontoTuristico() {
                 setOpenSnack(true);
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
-                handleClearForm();
+                clearForm();
             })
             .catch(() => {
                 setOpenSnack(true);
@@ -112,13 +134,26 @@ function FormPontoTuristico() {
     /**
      * Função de limpar formulário
      */
-    const handleClearForm = () => {
+    const clearForm = () => {
         setNome('');
         setDescricao('');
         setLocalizacao('');
         setEstado('');
         setIdEstado(0);
         setCidade('');
+    }
+
+    const handleChangeEstado = (event) => {
+        const estado = listEstado.filter(x => x.sigla === event.target.value);
+        setEstado(estado[0].sigla);
+        setIdEstado(estado[0].id);
+    };
+
+    const handleChangeCidade = (newValue) => {
+        if(newValue == null)
+            return setCidade('');
+
+        setCidade(newValue.label);
     }
 
     return (
@@ -166,11 +201,7 @@ function FormPontoTuristico() {
                         <Select
                             value={estado ?? undefined}
                             label="Estado"
-                            onChange={(e) => {
-                                const estado = listEstado.filter(x => x.sigla === e.target.value);
-                                setEstado(estado[0].sigla);
-                                setIdEstado(estado[0].id);
-                            }}
+                            onChange={(e) => handleChangeEstado(e)}
                         >
                             {
                                 listEstado.map(x => {
@@ -187,9 +218,7 @@ function FormPontoTuristico() {
                         size="small"
                         options={listCidades}
                         value={cidade ?? undefined}
-                        onChange={(event, newValue) => {
-                            setCidade(newValue.label);
-                        }}
+                        onChange={(event, newValue) => handleChangeCidade(newValue)}
                         style={{ flex: 1, marginTop: 10, marginLeft: '2vh' }}
                         renderInput={(params) =>
                             <TextField {...params}
@@ -202,9 +231,12 @@ function FormPontoTuristico() {
                     />
                 </Grid>
             </Grid>
-            <Grid container justifyContent="flex-end" style={{ marginTop: 10 }}>
-                <Button variant="contained" onClick={() => handleSaveClick()} >Salvar</Button>
-            </Grid>
+            {
+                props.action === "isView" &&
+                <Grid container justifyContent="flex-end" style={{ marginTop: 10 }}>
+                    <Button variant="contained" onClick={() => handleSaveClick()} >Salvar</Button>
+                </Grid>
+            }
             {
                 openSnack &&
                 <Notify open={openSnack} handleClose={() => setOpenSnack(false)} content={contentSnack} variant={variantSnack} />

@@ -10,48 +10,65 @@ export default function Table(props) {
       field: 'actions',
       headerName: 'Ações',
       width: 125,
-      renderCell: () => (
+      renderCell: (item) => (
         <Grid container style={{ display: "flex", justifyContent: "space-between", textAlign: 'right' }}>
-          <Button sx={{
-            maxWidth: '30px',
-            maxHeight: '30px',
-            minWidth: '30px',
-            minHeight: '30px',
-            background: 'gray',
-            '&:hover': {
-              backgroundColor: '#606060',
-            },
-          }} variant="contained" onClick={() => props.funcView()}>
+          <Button
+            sx={{
+              maxWidth: '30px',
+              maxHeight: '30px',
+              minWidth: '30px',
+              minHeight: '30px',
+              background: 'gray',
+              '&:hover': {
+                backgroundColor: '#606060',
+              },
+            }}
+            variant="contained"
+            onClick={() => { props.funcActionUser(); props.funcSetAction("View"); handleClickDataGrid(item.row) }}
+          >
             <SearchIcon />
           </Button>
-          <Button sx={{
-            maxWidth: '30px',
-            maxHeight: '30px',
-            minWidth: '30px',
-            minHeight: '30px',
-            background: 'orange',
-            '&:hover': {
-              backgroundColor: '#e89200',
-            },
-          }} variant="contained" onClick={() => props.funcUpdate()}>
+          <Button
+            sx={{
+              maxWidth: '30px',
+              maxHeight: '30px',
+              minWidth: '30px',
+              minHeight: '30px',
+              background: 'orange',
+              '&:hover': {
+                backgroundColor: '#e89200',
+              },
+            }}
+            variant="contained"
+            onClick={() => { props.funcActionUser(); props.funcSetAction("Update"); handleClickDataGrid(item.row)  }}
+          >
             <EditIcon />
           </Button>
-          <Button sx={{
-            maxWidth: '30px',
-            maxHeight: '30px',
-            minWidth: '30px',
-            minHeight: '30px',
-            background: 'red',
-            '&:hover': {
-              backgroundColor: '#e00000',
-            },
-          }} variant="contained" onClick={() => props.funcDelete()}>
+          <Button
+            sx={{
+              maxWidth: '30px',
+              maxHeight: '30px',
+              minWidth: '30px',
+              minHeight: '30px',
+              background: 'red',
+              '&:hover': {
+                backgroundColor: '#e00000',
+              },
+            }}
+            variant="contained"
+            onClick={() => { props.funcActionUser(); props.funcSetAction("Delete"); handleClickDataGrid(item.row)  }}
+          >
             <DeleteIcon />
           </Button>
-        </Grid>
+        </Grid >
       )
     },
   ];
+
+  const handleClickDataGrid = (e) => {
+    let funcGetPontoTuristico = props.funcSetObjPontoTuristicoClicked
+    funcGetPontoTuristico(e)
+  }
 
   const columns = [...props.columns, ...columnDefault]
 

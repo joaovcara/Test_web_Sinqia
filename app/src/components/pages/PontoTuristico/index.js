@@ -6,11 +6,13 @@ import FormPontoTuristico from './Form';
 const APIPontoTuristico = api("PontoTuristico");
 
 function PagePontoTuristico() {
-  const [listPontoTuristico, setListPontoTuristico] = useState([])
-  const [openModal, setOpenModal] = useState(false)
+  const [listPontoTuristico, setListPontoTuristico] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [action, setAction] = useState('');
+  const [objPontoTuristicoClicked, setObjPontoTuristicoClicked] = useState({});
 
   useEffect(() => {
-    getPontoTuristico()
+    getPontoTuristico();
   }, [])
 
   const columns = [
@@ -27,7 +29,7 @@ function PagePontoTuristico() {
   ];
 
   /**
-   * Função responsável por retornar os dados da API
+   * Função responsável por retornar os dados  da API
    */
   const getPontoTuristico = async () => {
     await APIPontoTuristico.get("GetAllPontoTuristico")
@@ -41,14 +43,13 @@ function PagePontoTuristico() {
       title={"Ponto Turístico"}
       data={listPontoTuristico}
       columns={columns}
-      Add={() => setOpenModal(true)}
-      Update={() => alert("Update")}
-      Delete={() => alert("Delete")}
-      View={() => alert("View")}
+      funcActionUser={() => setOpenModal(true)}
+      setAction={setAction}
+      setObjPontoTuristicoClicked={setObjPontoTuristicoClicked}
       openClose={openModal}
       funcOpenClose={setOpenModal}
       content={
-        <FormPontoTuristico />
+        <FormPontoTuristico action={action} objClicked={objPontoTuristicoClicked}/>
       }
     />
   );
