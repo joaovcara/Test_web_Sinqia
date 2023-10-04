@@ -27,7 +27,7 @@ const api = (controller) => {
                 alert(errorMessage); // Exibe a mensagem de erro em um alert.
             } else if (error.request) {
                 // Erro de rede (não foi possível fazer a requisição).
-                const errorMessage = `Erro de rede: ${error.message}`;
+                const errorMessage = `Erro de rede: ${error.message}, verifique a API`;
                 alert(errorMessage); // Exibe a mensagem de erro em um alert.
             } else {
                 // Erro desconhecido.
