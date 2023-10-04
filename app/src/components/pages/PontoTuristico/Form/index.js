@@ -160,7 +160,7 @@ function FormPontoTuristico(props) {
             .then((res) => {
                 setOpenSnack(true);
                 setVariantSnack("success");
-                setContentSnack("Ponto turístico adicionado com sucesso!");
+                setContentSnack("Ponto turístico atualizado com sucesso!");
                 props.updateList(true);
                 setTimeout(() => {
                     props.setOpenModal(false);
@@ -169,7 +169,7 @@ function FormPontoTuristico(props) {
             .catch(() => {
                 setOpenSnack(true);
                 setVariantSnack("error");
-                setContentSnack("Erro ao adicionar Ponto turístico!");
+                setContentSnack("Erro ao atualizar Ponto turístico!");
             });
     }
 
@@ -186,7 +186,7 @@ function FormPontoTuristico(props) {
             .then(() => {
                 setOpenSnack(true);
                 setVariantSnack("success");
-                setContentSnack("Ponto turístico adicionado com sucesso!");
+                setContentSnack("Ponto turístico excluído com sucesso!");
                 props.updateList(true);
                 setTimeout(() => {
                     props.setOpenModal(false);
@@ -195,7 +195,7 @@ function FormPontoTuristico(props) {
             .catch(() => {
                 setOpenSnack(true);
                 setVariantSnack("error");
-                setContentSnack("Erro ao adicionar Ponto turístico!");
+                setContentSnack("Erro ao excluído Ponto turístico!");
             });
     }
 
