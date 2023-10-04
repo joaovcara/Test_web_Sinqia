@@ -11,6 +11,7 @@ const APIPontoTuristico = api("PontoTuristico");
 let listEstado = [];
 
 function FormPontoTuristico(props) {
+    const [objId, setObjId] = useState(0);
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [localizacao, setLocalizacao] = useState('');
@@ -48,20 +49,16 @@ function FormPontoTuristico(props) {
         let estadoSelectedObj = listEstado.filter(x => x.id === props.objClicked.idEstado);
         objEstadoClicado.sigla = estadoSelectedObj[0]?.sigla ?? '';
 
-        if(props.action === "View" || props.action === "Update"){
+        if (props.action === "View" || props.action === "Update") {
+            setObjId(props.objClicked.id);
             setCidade(props.objClicked.cidade);
             setNome(props.objClicked.nome);
             setDescricao(props.objClicked.descricao);
             setLocalizacao(props.objClicked.localizacao);
             setIdEstado(props.objClicked.idEstado)
             setEstado(objEstadoClicado.sigla)
-        } else if(props.action === "Insert") {
-            setCidade('');
-            setNome('');
-            setDescricao('');
-            setLocalizacao('');
-            setIdEstado('')
-            setEstado('')
+        } else if (props.action === "Insert") {
+            clearForm();
         }
 
     }
@@ -105,7 +102,11 @@ function FormPontoTuristico(props) {
         setValidationErrors(errors);
 
         if (Object.keys(errors).length === 0) {
-            savePontoTuristico();
+            if (props.action === "Insert")
+                savePontoTuristico();
+
+            if (props.action === "Update")
+                updatePontoTuristico();
         }
     };
 
@@ -114,6 +115,42 @@ function FormPontoTuristico(props) {
      */
     const savePontoTuristico = async () => {
         await APIPontoTuristico.post("InsertPontoTuristico/", {
+            nome: nome,
+            descricao: descricao,
+            localizacao: localizacao,
+            cidade: cidade,
+            idEstado: idEstado
+        })
+            .then((res) => {
+                setOpenSnack(true);
+                setVariantSnack("success");
+                setContentSnack("Ponto turístico adicionado com sucesso!");
+                clearForm();
+                let newItem = {
+                    id: res.data,
+                    nome: nome,
+                    descricao: descricao,
+                    localizacao: localizacao,
+                    cidade: cidade,
+                    idEstado: idEstado
+                }
+
+                let listNewPonto = [...props.listPontoTuristico, newItem];
+                props.setListPontoTuristico(listNewPonto);
+            })
+            .catch(() => {
+                setOpenSnack(true);
+                setVariantSnack("error");
+                setContentSnack("Erro ao adicionar Ponto turístico!");
+            });
+    }
+
+    /**
+ * Função de insert chama API e persiste os dados
+ */
+    const updatePontoTuristico = async () => {
+        await APIPontoTuristico.put("UpdatePontoTuristico/", {
+            id: objId,
             nome: nome,
             descricao: descricao,
             localizacao: localizacao,
@@ -174,12 +211,13 @@ function FormPontoTuristico(props) {
      * Função de limpar formulário
      */
     const clearForm = () => {
+        setObjId(0);
         setNome('');
         setDescricao('');
         setLocalizacao('');
         setEstado('');
         setIdEstado(0);
-        setCidade('');
+        setCidade('');        
     }
 
     const handleChangeEstado = (value) => {
