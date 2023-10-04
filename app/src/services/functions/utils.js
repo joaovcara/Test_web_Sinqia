@@ -19,3 +19,15 @@ export function getCidades (estado) {
       throw error;
     })
 }
+
+/**
+ * Função responsável por converter date time em date 
+ * @param {Datetime} data 
+ * @returns Data formata DD/MM/YYYY
+ */
+export function convertDatetimaAsDate(data){
+  const dataObj = new Date(data);
+  const dataApenasData = new Date(dataObj.getFullYear(), dataObj.getMonth(), dataObj.getDate());
+
+  return dataApenasData.toISOString().split('T')[0];
+}

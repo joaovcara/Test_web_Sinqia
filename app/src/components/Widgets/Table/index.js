@@ -83,6 +83,12 @@ export default function Table(props) {
           },
         }}
         pageSizeOptions={[5, 10]}
+        sortModel={[
+          {
+            field: 'dataInclusao', // O campo da coluna que você deseja manter fixa
+            sort: 'desc', // Ordenação ascendente ou descendente
+          },
+        ]}
       />
     </div>
   );

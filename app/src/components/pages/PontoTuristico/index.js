@@ -2,6 +2,7 @@ import PageGeneric from '../PageGeneric';
 import api from '../../../services/api/api'
 import { useEffect, useState } from 'react';
 import FormPontoTuristico from './Form';
+import { convertDatetimaAsDate } from '../../../services/functions/utils'
 
 const APIPontoTuristico = api("PontoTuristico");
 
@@ -27,6 +28,13 @@ function PagePontoTuristico() {
       headerName: 'Descrição',
       flex: 1
     },
+    {
+      field: 'dataInclusao',
+      headerName: 'Data Inclusão',
+      width: 150,
+      sortable: true,
+      hide: true
+    },
   ];
 
   /**
@@ -35,10 +43,14 @@ function PagePontoTuristico() {
   const getPontoTuristico = async () => {
     await APIPontoTuristico.get("GetAllPontoTuristico")
       .then(result => {
-        setListPontoTuristico(result.data);
+        const converted = result.data.map(item => ({
+          ...item,
+          dataInclusao: convertDatetimaAsDate(item.dataInclusao)
+        }));
+        setListPontoTuristico(converted);
       });
 
-      setUpdateGrid(false)
+    setUpdateGrid(false)
   }
 
   return (
@@ -52,11 +64,11 @@ function PagePontoTuristico() {
       openClose={openModal}
       funcOpenClose={setOpenModal}
       content={
-        <FormPontoTuristico 
-          setOpenModal={setOpenModal} 
-          action={action} 
-          objClicked={objPontoTuristicoClicked} 
-          listPontoTuristico={listPontoTuristico} 
+        <FormPontoTuristico
+          setOpenModal={setOpenModal}
+          action={action}
+          objClicked={objPontoTuristicoClicked}
+          listPontoTuristico={listPontoTuristico}
           setListPontoTuristico={setListPontoTuristico}
           updateList={setUpdateGrid}
         />
