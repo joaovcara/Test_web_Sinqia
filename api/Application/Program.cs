@@ -14,7 +14,19 @@ builder.Services.AddScoped<DBSession>();
 builder.Services.AddTransient<IEstadoRepository, EstadoRepository>();
 builder.Services.AddTransient<IPontoTuristicoRepository, PontoTuristicoRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin() // Ou você pode especificar uma origem específica, por exemplo, "http://localhost:3000"
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
