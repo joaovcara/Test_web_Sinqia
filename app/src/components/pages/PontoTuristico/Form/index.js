@@ -12,7 +12,6 @@ function FormPontoTuristico(props) {
     const [operationUser, setOperationUser] = useState('');
     const [objClicked, setObjClicked] = useState('');
 
-    const [id, setId] = useState(0);
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [localizacao, setLocalizacao] = useState('');
@@ -90,18 +89,6 @@ function FormPontoTuristico(props) {
         if (Object.keys(errors).length === 0) {
             savePontoTuristico();
         }
-
-        let newItem = {
-            id: id,
-            nome: nome,
-            descricao: descricao,
-            localizacao: localizacao,
-            cidade: cidade,
-            idEstado: idEstado
-        }
-
-        let listNewPonto = [...props.listPontoTuristico, newItem];
-        props.setListPontoTuristico(listNewPonto);
     };
 
     /**
@@ -116,11 +103,21 @@ function FormPontoTuristico(props) {
             idEstado: idEstado
         })
             .then((res) => {
-                setId(res.data)
                 setOpenSnack(true);
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
                 clearForm();
+                let newItem = {
+                    id: res.data,
+                    nome: nome,
+                    descricao: descricao,
+                    localizacao: localizacao,
+                    cidade: cidade,
+                    idEstado: idEstado
+                }
+        
+                let listNewPonto = [...props.listPontoTuristico, newItem];
+                props.setListPontoTuristico(listNewPonto);
             })
             .catch(() => {
                 setOpenSnack(true);
