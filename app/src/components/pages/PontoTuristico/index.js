@@ -54,9 +54,7 @@ function PagePontoTuristico() {
           action={action} 
           objClicked={objPontoTuristicoClicked} 
           listPontoTuristico={listPontoTuristico} 
-          setListPontoTuristico={setListPontoTuristico}
-          getPontoTuristico={getPontoTuristico}
-        />
+          setListPontoTuristico={setListPontoTuristico}/>
       }
     />
   );

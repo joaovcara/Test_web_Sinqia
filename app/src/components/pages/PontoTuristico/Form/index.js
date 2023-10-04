@@ -8,10 +8,9 @@ import Notify from "../../../Widgets/Notify";
 const APIEstado = api("Estado");
 const APIPontoTuristico = api("PontoTuristico");
 
-function FormPontoTuristico(props) {
-    const [operationUser, setOperationUser] = useState('');
-    const [objClicked, setObjClicked] = useState('');
+let listEstado = [];
 
+function FormPontoTuristico(props) {
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [localizacao, setLocalizacao] = useState('');
@@ -19,8 +18,8 @@ function FormPontoTuristico(props) {
     const [idEstado, setIdEstado] = useState(0);
     const [cidade, setCidade] = useState('');
 
-    const [listEstado, setListEstado] = useState([]);
     const [listCidades, setListCidades] = useState([]);
+    const objEstadoClicado = props.objClicked;
 
     const [openSnack, setOpenSnack] = useState(false);
     const [variantSnack, setVariantSnack] = useState("");
@@ -29,10 +28,8 @@ function FormPontoTuristico(props) {
     const [validationErrors, setValidationErrors] = useState({});
 
     useEffect(() => {
-        getEstado();
-        setOperationUser(props.action)
-        setObjClicked(props.objClicked)
-    }, [props.action, props.objClicked, objClicked, operationUser])
+        handleFilterEstado();
+    }, [])
 
     useEffect(() => {
         getCidades(estado).then(res => {
@@ -46,14 +43,18 @@ function FormPontoTuristico(props) {
         });
     }, [estado])
 
+    const handleFilterEstado = async () => {
+        listEstado = await getEstado();
+        let estadoSelectedObj = listEstado.filter(x => x.id === props.objClicked.idEstado);
+        objEstadoClicado.sigla = estadoSelectedObj[0]?.sigla ?? '';
+    }
+
     /**
      * Função para recuperar dados dos estados da API
      */
     const getEstado = async () => {
-        await APIEstado.get("GetAllEstado")
-            .then(result =>
-                setListEstado(result.data)
-            );
+        const response = await APIEstado.get("GetAllEstado");
+            return response.data;   
     }
 
     /**
@@ -85,7 +86,7 @@ function FormPontoTuristico(props) {
     const handleSaveClick = () => {
         const errors = validateForm();
         setValidationErrors(errors);
-        
+
         if (Object.keys(errors).length === 0) {
             savePontoTuristico();
         }
@@ -115,7 +116,7 @@ function FormPontoTuristico(props) {
                     cidade: cidade,
                     idEstado: idEstado
                 }
-        
+
                 let listNewPonto = [...props.listPontoTuristico, newItem];
                 props.setListPontoTuristico(listNewPonto);
             })
@@ -131,7 +132,7 @@ function FormPontoTuristico(props) {
      * @returns 
      */
     const handleDeleteClick = async () => {
-        const id = objClicked.id;
+        const id = props.objClicked.id;
         if (!id)
             return;
 
@@ -164,8 +165,8 @@ function FormPontoTuristico(props) {
         setCidade('');
     }
 
-    const handleChangeEstado = (event) => {
-        const estado = listEstado.filter(x => x.sigla === event.target.value);
+    const handleChangeEstado = (value) => {
+        const estado = listEstado.filter(x => x.sigla === value);
         setEstado(estado[0].sigla);
         setIdEstado(estado[0].id);
     };
@@ -178,11 +179,12 @@ function FormPontoTuristico(props) {
     }
 
     const contentForm = () => {
+        let sigla = (props.action === "View" || props.action === "Update") ? (objEstadoClicado?.sigla ?? '') : estado;
         return (
             <>
                 <TextField
                     required={true}
-                    value={nome}
+                    value={props.action === "View" || props.action === "Update" ? props.objClicked.nome : nome}
                     onChange={(e) => setNome(e.target.value)}
                     error={!!validationErrors.nome}
                     helperText={validationErrors.nome}
@@ -194,7 +196,7 @@ function FormPontoTuristico(props) {
                 />
                 <TextField
                     required={true}
-                    value={descricao}
+                    value={props.action === "View" || props.action === "Update" ? props.objClicked.descricao : descricao}
                     onChange={(e) => setDescricao(e.target.value)}
                     error={!!validationErrors.descricao}
                     helperText={validationErrors.descricao}
@@ -206,7 +208,7 @@ function FormPontoTuristico(props) {
                 />
                 <TextField
                     required={true}
-                    value={localizacao}
+                    value={props.action === "View" || props.action === "Update" ? props.objClicked.localizacao : localizacao}
                     onChange={(e) => setLocalizacao(e.target.value)}
                     error={!!validationErrors.localizacao}
                     helperText={validationErrors.localizacao}
@@ -220,9 +222,9 @@ function FormPontoTuristico(props) {
                     <FormControl required={true} style={{ marginTop: 10, flex: 1 }} size="small" error={!!validationErrors.estado}>
                         <InputLabel>Estado</InputLabel>
                         <Select
-                            value={estado ?? undefined}
+                            value={sigla}
                             label="Estado"
-                            onChange={(e) => handleChangeEstado(e)}
+                            onChange={(e) => handleChangeEstado(e.target.value)}
                         >
                             {
                                 listEstado.map(x => {
@@ -258,7 +260,7 @@ function FormPontoTuristico(props) {
     return (
         <>
             <Grid style={{ paddingTop: "2vh" }} justifyContent="space-around" >
-                {operationUser !== "Delete" ?
+                {props.action !== "Delete" ?
                     contentForm()
                     :
                     <Grid display="flex" margin={2} alignItems="center">
@@ -268,10 +270,10 @@ function FormPontoTuristico(props) {
                 }
             </Grid>
             {
-                operationUser !== "View" &&
+                props.action !== "View" &&
                 <Grid container justifyContent="flex-end" style={{ marginTop: 10 }}>
                     {
-                        operationUser === "Delete" ?
+                        props.action === "Delete" ?
                             <Button style={{ background: 'red' }} variant="contained" onClick={() => handleDeleteClick()} >Deletar</Button>
                             :
                             <Button variant="contained" onClick={() => handleSaveClick()} >Salvar</Button>
