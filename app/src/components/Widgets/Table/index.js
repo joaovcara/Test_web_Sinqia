@@ -24,7 +24,7 @@ export default function Table(props) {
               },
             }}
             variant="contained"
-            onClick={() => { props.funcActionUser(); props.funcSetAction("View"); handleClickDataGrid(item.row) }}
+            onClick={() => { props.funcOpenClose(true); props.funcSetAction("View"); handleClickDataGrid(item.row) }}
           >
             <SearchIcon />
           </Button>
@@ -40,7 +40,7 @@ export default function Table(props) {
               },
             }}
             variant="contained"
-            onClick={() => { props.funcActionUser(); props.funcSetAction("Update"); handleClickDataGrid(item.row)  }}
+            onClick={() => { props.funcOpenClose(true); props.funcSetAction("Update"); handleClickDataGrid(item.row)  }}
           >
             <EditIcon />
           </Button>
@@ -56,7 +56,7 @@ export default function Table(props) {
               },
             }}
             variant="contained"
-            onClick={() => { props.funcActionUser(); props.funcSetAction("Delete"); handleClickDataGrid(item.row)  }}
+            onClick={() => { props.funcOpenClose(true); props.funcSetAction("Delete"); handleClickDataGrid(item.row)  }}
           >
             <DeleteIcon />
           </Button>

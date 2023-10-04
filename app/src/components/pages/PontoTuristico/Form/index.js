@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, Autocomplete, Button, FormHelperText } from "@mui/material";
+import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, Autocomplete, Button, FormHelperText, Typography } from "@mui/material";
+import NotInterestedIcon from '@mui/icons-material/NotInterested';
 import { getCidades } from '../../../../services/functions/utils'
 import api from '../../../../services/api/api'
 import Notify from "../../../Widgets/Notify";
@@ -8,9 +9,10 @@ const APIEstado = api("Estado");
 const APIPontoTuristico = api("PontoTuristico");
 
 function FormPontoTuristico(props) {
-    //const [actionUser, setActionUser] = useState('');
-    //const objClicked = props.objClicked;
+    const [operationUser, setOperationUser] = useState('');
+    const [objClicked, setObjClicked] = useState('');
 
+    const [id, setId] = useState(0);
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [localizacao, setLocalizacao] = useState('');
@@ -29,7 +31,9 @@ function FormPontoTuristico(props) {
 
     useEffect(() => {
         getEstado();
-    }, [])
+        setOperationUser(props.action)
+        setObjClicked(props.objClicked)
+    }, [props.action, props.objClicked, objClicked, operationUser])
 
     useEffect(() => {
         getCidades(estado).then(res => {
@@ -43,10 +47,6 @@ function FormPontoTuristico(props) {
         });
     }, [estado])
 
-    // const handleEventTable = (action) => {
-    //     console.log(props.action)
-    // }
-
     /**
      * Função para recuperar dados dos estados da API
      */
@@ -56,21 +56,6 @@ function FormPontoTuristico(props) {
                 setListEstado(result.data)
             );
     }
-
-    // const handleIsView = () => {
-    //     setNome(objClicked.nome);
-    //     setDescricao(objClicked.descricao);
-    //     setLocalizacao(objClicked.localizacao);
-    //     setEstado();
-    //     setIdEstado(0);
-    //     setCidade('');
-    // }
-
-    // const handleIsUpdate = () => {
-    // }
-
-    // const handleIsDelete = () => {
-    // }
 
     /**
      * Validação do formulário
@@ -101,10 +86,22 @@ function FormPontoTuristico(props) {
     const handleSaveClick = () => {
         const errors = validateForm();
         setValidationErrors(errors);
-
+        
         if (Object.keys(errors).length === 0) {
             savePontoTuristico();
         }
+
+        let newItem = {
+            id: id,
+            nome: nome,
+            descricao: descricao,
+            localizacao: localizacao,
+            cidade: cidade,
+            idEstado: idEstado
+        }
+
+        let listNewPonto = [...props.listPontoTuristico, newItem];
+        props.setListPontoTuristico(listNewPonto);
     };
 
     /**
@@ -118,11 +115,38 @@ function FormPontoTuristico(props) {
             cidade: cidade,
             idEstado: idEstado
         })
-            .then(() => {
+            .then((res) => {
+                setId(res.data)
                 setOpenSnack(true);
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
                 clearForm();
+            })
+            .catch(() => {
+                setOpenSnack(true);
+                setVariantSnack("error");
+                setContentSnack("Erro ao adicionar Ponto turístico!");
+            });
+    }
+
+    /**
+     * Função responável por deletar um ponto turistico
+     * @returns 
+     */
+    const handleDeleteClick = async () => {
+        const id = objClicked.id;
+        if (!id)
+            return;
+
+        let listPontoFilter = props.listPontoTuristico.filter(x => x.id !== id);
+        props.setListPontoTuristico(listPontoFilter);
+
+        await APIPontoTuristico.delete(`DeletePontoTuristico?id=${id}`)
+            .then(() => {
+                setOpenSnack(true);
+                setVariantSnack("success");
+                setContentSnack("Ponto turístico adicionado com sucesso!");
+                setTimeout(props.setOpenModal(false), 5000);
             })
             .catch(() => {
                 setOpenSnack(true);
@@ -150,15 +174,15 @@ function FormPontoTuristico(props) {
     };
 
     const handleChangeCidade = (newValue) => {
-        if(newValue == null)
+        if (newValue == null)
             return setCidade('');
 
         setCidade(newValue.label);
     }
 
-    return (
-        <>
-            <Grid style={{ paddingTop: "2vh" }} justifyContent="space-around" >
+    const contentForm = () => {
+        return (
+            <>
                 <TextField
                     required={true}
                     value={nome}
@@ -230,11 +254,31 @@ function FormPontoTuristico(props) {
                         }
                     />
                 </Grid>
+            </>
+        )
+    }
+
+    return (
+        <>
+            <Grid style={{ paddingTop: "2vh" }} justifyContent="space-around" >
+                {operationUser !== "Delete" ?
+                    contentForm()
+                    :
+                    <Grid display="flex" margin={2} alignItems="center">
+                        <NotInterestedIcon style={{ color: "red" }} fontSize="large" />
+                        <Typography width={"100%"} flex={1}>Deseja realmente excluir o ponto turístico?</Typography>
+                    </Grid>
+                }
             </Grid>
             {
-                props.action === "isView" &&
+                operationUser !== "View" &&
                 <Grid container justifyContent="flex-end" style={{ marginTop: 10 }}>
-                    <Button variant="contained" onClick={() => handleSaveClick()} >Salvar</Button>
+                    {
+                        operationUser === "Delete" ?
+                            <Button style={{ background: 'red' }} variant="contained" onClick={() => handleDeleteClick()} >Deletar</Button>
+                            :
+                            <Button variant="contained" onClick={() => handleSaveClick()} >Salvar</Button>
+                    }
                 </Grid>
             }
             {

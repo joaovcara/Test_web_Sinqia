@@ -49,7 +49,14 @@ function PagePontoTuristico() {
       openClose={openModal}
       funcOpenClose={setOpenModal}
       content={
-        <FormPontoTuristico action={action} objClicked={objPontoTuristicoClicked}/>
+        <FormPontoTuristico 
+          setOpenModal={setOpenModal} 
+          action={action} 
+          objClicked={objPontoTuristicoClicked} 
+          listPontoTuristico={listPontoTuristico} 
+          setListPontoTuristico={setListPontoTuristico}
+          getPontoTuristico={getPontoTuristico}
+        />
       }
     />
   );

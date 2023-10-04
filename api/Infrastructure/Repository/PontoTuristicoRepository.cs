@@ -25,8 +25,9 @@ namespace Infrastructure.Repository
             using (var conn = _dbSession.Connection)
             {
                 string sql = $@"INSERT INTO {Entidade} (Nome, Descricao, Localizacao, Cidade, IdEstado) 
+                                OUTPUT INSERTED.Id
                                 VALUES (@Nome, @Descricao, @Localizacao, @Cidade, @IdEstado) ";
-                int result = await conn.ExecuteAsync(sql, obj);
+                int result = await conn.ExecuteScalarAsync<int>(sql, obj);
                 return result;
             }
         }

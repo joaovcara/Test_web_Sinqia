@@ -9,7 +9,7 @@ function PageGeneric(props) {
       <Grid container justifyContent="space-between" flexWrap="nowrap">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
           <Typography variant='h6' marginRight="10px">{props.title}</Typography>
-          <Button variant='contained' onClick={() => props.funcActionUser()}>
+          <Button variant='contained' onClick={() => {props.funcActionUser(); props.setAction("Insert")}}>
             <Typography style={{ textTransform: "none", marginRight: "10px" }} variant='subtitle2' >Adicionar</Typography>
             <AddIcon fontSize='small' />
           </Button>
@@ -20,7 +20,7 @@ function PageGeneric(props) {
         <Table
           data={props.data}
           columns={props.columns}
-          funcActionUser={props.funcActionUser}
+          funcOpenClose={props.funcOpenClose}
           funcSetAction={props.setAction}
           funcSetObjPontoTuristicoClicked={props.setObjPontoTuristicoClicked}
         />
@@ -28,7 +28,7 @@ function PageGeneric(props) {
       {
         props.openClose &&
         <Modal
-          title={"Novo " + props.title}
+          title={props.title}
           openClose={props.openClose}
           funcOpenClose={props.funcOpenClose}
           content={
