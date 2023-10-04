@@ -146,8 +146,8 @@ function FormPontoTuristico(props) {
     }
 
     /**
- * Função de insert chama API e persiste os dados
- */
+     * Função de insert chama API e persiste os dados
+     */
     const updatePontoTuristico = async () => {
         await APIPontoTuristico.put("UpdatePontoTuristico/", {
             id: objId,
@@ -161,18 +161,10 @@ function FormPontoTuristico(props) {
                 setOpenSnack(true);
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
-                let newItem = {
-                    id: res.data,
-                    nome: nome,
-                    descricao: descricao,
-                    localizacao: localizacao,
-                    cidade: cidade,
-                    idEstado: idEstado
-                }
-
-                var listaGridFiltred = props.listPontoTuristico.filter(x => x.id !== objId);
-                let listNewPonto = [...listaGridFiltred, newItem];
-                props.setListPontoTuristico(listNewPonto);
+                props.updateList(true);
+                setTimeout(() => {
+                    props.setOpenModal(false);
+                }, 1200);
             })
             .catch(() => {
                 setOpenSnack(true);
@@ -190,15 +182,15 @@ function FormPontoTuristico(props) {
         if (!id)
             return;
 
-        let listPontoFilter = props.listPontoTuristico.filter(x => x.id !== id);
-        props.setListPontoTuristico(listPontoFilter);
-
         await APIPontoTuristico.delete(`DeletePontoTuristico?id=${id}`)
             .then(() => {
                 setOpenSnack(true);
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
-                props.setOpenModal(false);
+                props.updateList(true);
+                setTimeout(() => {
+                    props.setOpenModal(false);
+                }, 1200);
             })
             .catch(() => {
                 setOpenSnack(true);
@@ -220,6 +212,9 @@ function FormPontoTuristico(props) {
         setCidade('');
     }
 
+    /**
+     * Função que gerencia a mudança de estado no select
+     */
     const handleChangeEstado = (value) => {
         const estado = listEstado.filter(x => x.sigla === value);
         setEstadoSelected(estado[0].sigla);
@@ -227,6 +222,9 @@ function FormPontoTuristico(props) {
         setCidade('');
     };
 
+    /**
+     * Função que gerencia a mudança de cidade no autocomplete
+     */
     const handleChangeCidade = (newValue) => {
         if (newValue == null)
             return setCidade('');
@@ -234,6 +232,9 @@ function FormPontoTuristico(props) {
         setCidade(newValue.label);
     }
 
+    /**
+     * Função retorna o conteudo do formulário
+     */
     const contentForm = () => {
         return (
             <>

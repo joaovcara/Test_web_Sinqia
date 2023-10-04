@@ -10,14 +10,11 @@ function PagePontoTuristico() {
   const [openModal, setOpenModal] = useState(false);
   const [action, setAction] = useState('');
   const [objPontoTuristicoClicked, setObjPontoTuristicoClicked] = useState({});
+  const [updateGrid, setUpdateGrid] = useState(true)
 
   useEffect(() => {
     getPontoTuristico();
-  }, [])
-
-  useEffect(() => {
-    getPontoTuristico();
-  }, [listPontoTuristico])
+  }, [updateGrid])
 
   const columns = [
     {
@@ -40,6 +37,8 @@ function PagePontoTuristico() {
       .then(result => {
         setListPontoTuristico(result.data);
       });
+
+      setUpdateGrid(false)
   }
 
   return (
@@ -58,7 +57,9 @@ function PagePontoTuristico() {
           action={action} 
           objClicked={objPontoTuristicoClicked} 
           listPontoTuristico={listPontoTuristico} 
-          setListPontoTuristico={setListPontoTuristico}/>
+          setListPontoTuristico={setListPontoTuristico}
+          updateList={setUpdateGrid}
+        />
       }
     />
   );
