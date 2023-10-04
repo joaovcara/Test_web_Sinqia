@@ -10,7 +10,7 @@ import axios from "axios";
  */
 const api = (controller) => {
     let axiosInstance = axios.create({
-        baseURL: "https://localhost:7007/api/" + controller + "/"
+        baseURL: "https://localhost:44332/api/" + controller + "/"
     });
 
     return axiosInstance;

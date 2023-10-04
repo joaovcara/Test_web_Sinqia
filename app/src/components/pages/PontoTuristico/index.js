@@ -20,7 +20,7 @@ function PagePontoTuristico() {
     {
       field: 'nome',
       headerName: 'Nome',
-      flex: 1
+      width: 300
     },
     {
       field: 'descricao',
