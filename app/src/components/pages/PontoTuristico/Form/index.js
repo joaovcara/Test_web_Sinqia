@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, Autocomplete } from "@mui/material";
+import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, Autocomplete, Button, FormHelperText } from "@mui/material";
 import { getCidades } from '../../../../services/functions/utils'
 import api from '../../../../services/api/api'
+import Notify from "../../../Widgets/Notify";
 
 const APIEstado = api("Estado");
+const APIPontoTuristico = api("PontoTuristico");
 
 function FormPontoTuristico() {
     const [nome, setNome] = useState('');
@@ -12,11 +14,18 @@ function FormPontoTuristico() {
     const [estado, setEstado] = useState('');
     const [idEstado, setIdEstado] = useState(0);
     const [cidade, setCidade] = useState('');
+
     const [listEstado, setListEstado] = useState([]);
     const [listCidades, setListCidades] = useState([]);
 
+    const [openSnack, setOpenSnack] = useState(false);
+    const [variantSnack, setVariantSnack] = useState("");
+    const [contentSnack, setContentSnack] = useState("");
+
+    const [validationErrors, setValidationErrors] = useState({});
+
     useEffect(() => {
-        getEstado()
+        getEstado();
     }, [])
 
     useEffect(() => {
@@ -29,10 +38,11 @@ function FormPontoTuristico() {
             })
             setListCidades(listCidades);
         });
-
     }, [estado])
 
-    //Função para recuperar dados da API
+    /**
+     * Função para recuperar dados dos estados da API
+     */
     const getEstado = async () => {
         APIEstado.get("GetAllEstado")
             .then(result =>
@@ -40,46 +50,166 @@ function FormPontoTuristico() {
             );
     }
 
-    const handleChange = (event) => {
-        const estado = listEstado.filter(x => x.sigla === event.target.value);
-        setEstado(estado[0].sigla);
-        setIdEstado(estado[0].id);
+    /**
+     * Validação do formulário
+     */
+    const validateForm = () => {
+        const errors = {};
+        if (!nome) {
+            errors.nome = "O campo Nome é obrigatório";
+        }
+        if (!descricao) {
+            errors.descricao = "O campo Descrição é obrigatório";
+        }
+        if (!localizacao) {
+            errors.localizacao = "O campo Localização é obrigatório";
+        }
+        if (!estado) {
+            errors.estado = "Selecione um Estado";
+        }
+        if (!cidade) {
+            errors.cidade = "Selecione uma Cidade";
+        }
+        return errors;
+    }
+
+    /**
+     * Função responsável por validar e salvar formulário
+     */
+    const handleSaveClick = () => {
+        const errors = validateForm();
+        setValidationErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
+            savePontoTuristico();
+        }
+    };
+
+    /**
+     * Função de insert chama API e persiste os dados
+     */
+    const savePontoTuristico = async () => {
+        await APIPontoTuristico.post("InsertPontoTuristico/", {
+            nome: nome,
+            descricao: descricao,
+            localizacao: localizacao,
+            cidade: cidade,
+            idEstado: idEstado
+        })
+            .then(() => {
+                setOpenSnack(true);
+                setVariantSnack("success");
+                setContentSnack("Ponto turístico adicionado com sucesso!");
+                handleClearForm();
+            })
+            .catch(() => {
+                setOpenSnack(true);
+                setVariantSnack("error");
+                setContentSnack("Erro ao adicionar Ponto turístico!");
+            });
+    }
+
+    /**
+     * Função de limpar formulário
+     */
+    const handleClearForm = () => {
+        setNome('');
+        setDescricao('');
+        setLocalizacao('');
+        setEstado('');
+        setIdEstado(0);
+        setCidade('');
     }
 
     return (
-        <Grid style={{ paddingTop: "2vh" }} justifyContent="space-around" >
-            <TextField value={nome} onChange={(e) => setNome(e.target.value)} style={{ marginTop: 10 }} fullWidth size="small" label="Nome" variant="outlined" />
-            <TextField value={descricao} onChange={(e) => setDescricao(e.target.value)} style={{ marginTop: 10 }} fullWidth size="small" label="Descrição" variant="outlined" />
-            <TextField value={localizacao} onChange={(e) => setLocalizacao(e.target.value)} style={{ marginTop: 10 }} fullWidth size="small" label="Localização" variant="outlined" />
-            <Grid display="flex">
-                <FormControl style={{ marginTop: 10, minWidth: 120 }} size="small">
-                    <InputLabel>Estado</InputLabel>
-                    <Select
-                        value={estado}
-                        label="Estado"
-                        sx={{ width: 200 }}
-                        onChange={handleChange}
-                    >
-                        {
-                            listEstado.map(x => {
-                                return <MenuItem key={x.id} value={x.sigla}>{x.descricao}</MenuItem>
-                            })
-                        }
-                    </Select>
-                </FormControl>
-                <Autocomplete
+        <>
+            <Grid style={{ paddingTop: "2vh" }} justifyContent="space-around" >
+                <TextField
+                    required={true}
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    error={!!validationErrors.nome}
+                    helperText={validationErrors.nome}
+                    style={{ marginTop: 10 }}
+                    fullWidth
                     size="small"
-                    disablePortal
-                    options={listCidades}
-                    value={cidade}
-                    onChange={(event, newValue) => {
-                        setCidade(newValue);
-                    }}
-                    sx={{ flex: 1, marginTop: '10px', marginLeft: '2vh' }}
-                    renderInput={(params) => <TextField {...params} label="Cidades" />}
+                    label="Nome"
+                    variant="outlined"
                 />
+                <TextField
+                    required={true}
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                    error={!!validationErrors.descricao}
+                    helperText={validationErrors.descricao}
+                    style={{ marginTop: 10 }}
+                    fullWidth
+                    size="small"
+                    label="Descrição"
+                    variant="outlined"
+                />
+                <TextField
+                    required={true}
+                    value={localizacao}
+                    onChange={(e) => setLocalizacao(e.target.value)}
+                    error={!!validationErrors.localizacao}
+                    helperText={validationErrors.localizacao}
+                    style={{ marginTop: 10 }}
+                    fullWidth
+                    size="small"
+                    label="Localização"
+                    variant="outlined"
+                />
+                <Grid display="flex">
+                    <FormControl required={true} style={{ marginTop: 10, flex: 1 }} size="small" error={!!validationErrors.estado}>
+                        <InputLabel>Estado</InputLabel>
+                        <Select
+                            value={estado ?? undefined}
+                            label="Estado"
+                            onChange={(e) => {
+                                const estado = listEstado.filter(x => x.sigla === e.target.value);
+                                setEstado(estado[0].sigla);
+                                setIdEstado(estado[0].id);
+                            }}
+                        >
+                            {
+                                listEstado.map(x => {
+                                    return <MenuItem key={x.id} value={x.sigla}>{x.descricao}</MenuItem>
+                                })
+                            }
+                        </Select>
+                        {!!validationErrors.estado && (
+                            <FormHelperText>{validationErrors.estado}</FormHelperText>
+                        )}
+                    </FormControl>
+                    <Autocomplete
+                        disabled={listCidades.length > 0 ? false : true}
+                        size="small"
+                        options={listCidades}
+                        value={cidade ?? undefined}
+                        onChange={(event, newValue) => {
+                            setCidade(newValue.label);
+                        }}
+                        style={{ flex: 1, marginTop: 10, marginLeft: '2vh' }}
+                        renderInput={(params) =>
+                            <TextField {...params}
+                                required={true}
+                                label="Cidades"
+                                error={!!validationErrors.cidade}
+                                helperText={validationErrors.cidade}
+                            />
+                        }
+                    />
+                </Grid>
             </Grid>
-        </Grid>
+            <Grid container justifyContent="flex-end" style={{ marginTop: 10 }}>
+                <Button variant="contained" onClick={() => handleSaveClick()} >Salvar</Button>
+            </Grid>
+            {
+                openSnack &&
+                <Notify open={openSnack} handleClose={() => setOpenSnack(false)} content={contentSnack} variant={variantSnack} />
+            }
+        </>
     )
 }
 
