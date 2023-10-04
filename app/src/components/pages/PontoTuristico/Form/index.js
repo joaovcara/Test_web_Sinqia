@@ -197,7 +197,6 @@ function FormPontoTuristico(props) {
     }
 
     const contentForm = () => {
-        let sigla = (props.action === "View" || props.action === "Update") ? (objEstadoClicado?.sigla ?? '') : estado;
         return (
             <>
                 <TextField
@@ -243,7 +242,7 @@ function FormPontoTuristico(props) {
                     <FormControl disabled={props.action === "View" ? true : false} required={true} style={{ marginTop: 10, flex: 1 }} size="small" error={!!validationErrors.estado}>
                         <InputLabel>Estado</InputLabel>
                         <Select
-                            value={sigla}
+                            value={estado}
                             label="Estado"
                             onChange={(e) => handleChangeEstado(e.target.value)}
                         >
