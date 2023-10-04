@@ -11,16 +11,17 @@ const APIPontoTuristico = api("PontoTuristico");
 let listEstado = [];
 
 function FormPontoTuristico(props) {
+    const objEstadoClicado = props.objClicked;
+
     const [objId, setObjId] = useState(0);
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [localizacao, setLocalizacao] = useState('');
-    const [estado, setEstado] = useState('');
+    const [estadoSelected, setEstadoSelected] = useState('');
     const [idEstado, setIdEstado] = useState(0);
     const [cidade, setCidade] = useState('');
 
     const [listCidades, setListCidades] = useState([]);
-    const objEstadoClicado = props.objClicked;
 
     const [openSnack, setOpenSnack] = useState(false);
     const [variantSnack, setVariantSnack] = useState("");
@@ -29,11 +30,11 @@ function FormPontoTuristico(props) {
     const [validationErrors, setValidationErrors] = useState({});
 
     useEffect(() => {
-        handleFilterEstado();
+        openComponent();
     }, [])
 
     useEffect(() => {
-        getCidades(estado).then(res => {
+        getCidades(estadoSelected).then(res => {
             let listCidades = res.map(cidade => {
                 return {
                     id: cidade.id,
@@ -42,25 +43,24 @@ function FormPontoTuristico(props) {
             })
             setListCidades(listCidades);
         });
-    }, [estado])
+    }, [estadoSelected])
 
-    const handleFilterEstado = async () => {
+    const openComponent = async () => {
         listEstado = await getEstado();
-        let estadoSelectedObj = listEstado.filter(x => x.id === props.objClicked.idEstado);
+        let estadoSelectedObj = listEstado.filter(x => x.id === objEstadoClicado.idEstado);
         objEstadoClicado.sigla = estadoSelectedObj[0]?.sigla ?? '';
 
         if (props.action === "View" || props.action === "Update") {
-            setObjId(props.objClicked.id);
-            setCidade(props.objClicked.cidade);
-            setNome(props.objClicked.nome);
-            setDescricao(props.objClicked.descricao);
-            setLocalizacao(props.objClicked.localizacao);
-            setIdEstado(props.objClicked.idEstado)
-            setEstado(objEstadoClicado.sigla)
+            setObjId(objEstadoClicado.id);
+            setCidade(objEstadoClicado.cidade);
+            setNome(objEstadoClicado.nome);
+            setDescricao(objEstadoClicado.descricao);
+            setLocalizacao(objEstadoClicado.localizacao);
+            setIdEstado(objEstadoClicado.idEstado)
+            setEstadoSelected(objEstadoClicado.sigla)
         } else if (props.action === "Insert") {
             clearForm();
         }
-
     }
 
     /**
@@ -85,7 +85,7 @@ function FormPontoTuristico(props) {
         if (!localizacao) {
             errors.localizacao = "O campo Localização é obrigatório";
         }
-        if (!estado) {
+        if (!estadoSelected) {
             errors.estado = "Selecione um Estado";
         }
         if (!cidade) {
@@ -161,7 +161,6 @@ function FormPontoTuristico(props) {
                 setOpenSnack(true);
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
-                clearForm();
                 let newItem = {
                     id: res.data,
                     nome: nome,
@@ -171,7 +170,8 @@ function FormPontoTuristico(props) {
                     idEstado: idEstado
                 }
 
-                let listNewPonto = [...props.listPontoTuristico, newItem];
+                var listaGridFiltred = props.listPontoTuristico.filter(x => x.id !== objId);
+                let listNewPonto = [...listaGridFiltred, newItem];
                 props.setListPontoTuristico(listNewPonto);
             })
             .catch(() => {
@@ -186,7 +186,7 @@ function FormPontoTuristico(props) {
      * @returns 
      */
     const handleDeleteClick = async () => {
-        const id = props.objClicked.id;
+        const id = objEstadoClicado.id;
         if (!id)
             return;
 
@@ -198,7 +198,7 @@ function FormPontoTuristico(props) {
                 setOpenSnack(true);
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
-                setTimeout(props.setOpenModal(false), 5000);
+                props.setOpenModal(false);
             })
             .catch(() => {
                 setOpenSnack(true);
@@ -215,14 +215,14 @@ function FormPontoTuristico(props) {
         setNome('');
         setDescricao('');
         setLocalizacao('');
-        setEstado('');
+        setEstadoSelected('');
         setIdEstado(0);
-        setCidade('');        
+        setCidade('');
     }
 
     const handleChangeEstado = (value) => {
         const estado = listEstado.filter(x => x.sigla === value);
-        setEstado(estado[0].sigla);
+        setEstadoSelected(estado[0].sigla);
         setIdEstado(estado[0].id);
         setCidade('');
     };
@@ -280,7 +280,7 @@ function FormPontoTuristico(props) {
                     <FormControl disabled={props.action === "View" ? true : false} required={true} style={{ marginTop: 10, flex: 1 }} size="small" error={!!validationErrors.estado}>
                         <InputLabel>Estado</InputLabel>
                         <Select
-                            value={estado}
+                            value={estadoSelected}
                             label="Estado"
                             onChange={(e) => handleChangeEstado(e.target.value)}
                         >

@@ -27,14 +27,14 @@ export default function Sidebar(props) {
             </ListItemButton>
           </Link>
         </ListItem>
-        <ListItem key={"Estado"} disablePadding>
+        {/* <ListItem key={"Estado"} disablePadding>
           <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/Estado">
             <ListItemButton>
               <ListItemIcon><MapIcon /></ListItemIcon>
               <ListItemText primary={"Estado"} />
             </ListItemButton>
           </Link>
-        </ListItem>
+        </ListItem> */}
         <ListItem key={"PontoTuristico"} disablePadding>
           <Link style={{ textDecoration: "none", color: "#707070", width: widthAll }} to="/PontoTuristico">
             <ListItemButton>

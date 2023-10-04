@@ -15,6 +15,10 @@ function PagePontoTuristico() {
     getPontoTuristico();
   }, [])
 
+  useEffect(() => {
+    getPontoTuristico();
+  }, [listPontoTuristico])
+
   const columns = [
     {
       field: 'nome',
