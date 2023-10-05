@@ -16,9 +16,9 @@ function Layout() {
       <Sidebar openSidebar={openSidebar} funcOpenSidebar={setOpenSidebar} />
       <Container>
         <Routes>
-          <Route exact path="/" element={<PageHome />} />
+          <Route exact path="/" element={<PagePontoTuristico />} />
           {/* <Route exact path="/Estado" element={<PageEstado />} /> */}
-          <Route exact path="/PontoTuristico" element={<PagePontoTuristico />} />
+          {/* <Route exact path="/PontoTuristico" element={<PagePontoTuristico />} /> */}
         </Routes>
       </Container>
     </Router>
