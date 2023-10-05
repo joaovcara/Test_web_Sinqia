@@ -54,7 +54,7 @@ $ git clone https://github.com/joaovcara/Test_web_Sinqia.git
 ### Criando Banco de dados (Sql Server)
 
   <p style="text-align: left">Execute o script SQL <strong>SqlBase.sql</strong> dentro da pasta db, este script irá criar o banco de dados, tabelas e inserir dados padrões.</p>
-
+  <p style="text-align: left">Existe um script chamado <strong>InsertDadosPontosTuristicos.sql</strong> este contém registros para visualização inicial.</p>
   #### Configurando banco de dados na API
   <p style="text-align: left">Abrir o projeto <strong>api</strong> no Visual Studio, e editar o arquivo <strong>appsettings.json</strong>, colocando a sua instância do SqlServer.</p>
 
