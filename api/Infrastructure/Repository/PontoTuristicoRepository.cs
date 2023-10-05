@@ -34,7 +34,7 @@ namespace Infrastructure.Repository
             using (var conn = _dbSession.Connection)
             {
                 string sql = $@"UPDATE {Entidade} 
-                                SET Nome = @Nome, Descricao = @Descricao, Localizacao = @Localizacao, Cidade = @Cidade, DataInclusao = @DataInclusao IdEstado = @IdEstado 
+                                SET Nome = @Nome, Descricao = @Descricao, Localizacao = @Localizacao, Cidade = @Cidade, IdEstado = @IdEstado 
                                 WHERE Id = @Id";
                 int result = await conn.ExecuteAsync(sql, obj);
                 return result;

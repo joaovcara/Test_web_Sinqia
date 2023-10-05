@@ -2,7 +2,6 @@ import PageGeneric from '../PageGeneric';
 import api from '../../../services/api/api'
 import { useEffect, useState } from 'react';
 import FormPontoTuristico from './Form';
-import { convertDatetimaAsDate } from '../../../services/functions/utils'
 
 const APIPontoTuristico = api("PontoTuristico");
 
@@ -21,7 +20,7 @@ function PagePontoTuristico() {
     {
       field: 'nome',
       headerName: 'Nome',
-      width: 300
+      width: 400
     },
     {
       field: 'localizacao',
@@ -31,7 +30,7 @@ function PagePontoTuristico() {
     {
       field: 'dataInclusao',
       headerName: 'Data Inclusão',
-      width: 150,
+      width: 200,
       sortable: true,
       hide: true
     },
@@ -43,11 +42,7 @@ function PagePontoTuristico() {
   const getPontoTuristico = async () => {
     await APIPontoTuristico.get("GetAllPontoTuristico")
       .then(result => {
-        const converted = result.data.map(item => ({
-          ...item,
-          dataInclusao: convertDatetimaAsDate(item.dataInclusao)
-        }));
-        setListPontoTuristico(converted);
+        setListPontoTuristico(result.data);
       });
 
     setUpdateGrid(false)

@@ -20,6 +20,7 @@ function FormPontoTuristico(props) {
     const [estadoSelected, setEstadoSelected] = useState('');
     const [idEstado, setIdEstado] = useState(0);
     const [cidade, setCidade] = useState('');
+    const [dataInclusao, setDataInclusao] = useState('');
 
     const [listCidades, setListCidades] = useState([]);
 
@@ -58,6 +59,7 @@ function FormPontoTuristico(props) {
             setLocalizacao(objEstadoClicado.localizacao);
             setIdEstado(objEstadoClicado.idEstado)
             setEstadoSelected(objEstadoClicado.sigla)
+            setDataInclusao(objEstadoClicado.dataInclusao)
         } else if (props.action === "Insert") {
             clearForm();
         }
@@ -126,17 +128,7 @@ function FormPontoTuristico(props) {
                 setVariantSnack("success");
                 setContentSnack("Ponto turístico adicionado com sucesso!");
                 clearForm();
-                let newItem = {
-                    id: res.data,
-                    nome: nome,
-                    descricao: descricao,
-                    localizacao: localizacao,
-                    cidade: cidade,
-                    idEstado: idEstado
-                }
-
-                let listNewPonto = [...props.listPontoTuristico, newItem];
-                props.setListPontoTuristico(listNewPonto);
+                props.updateList(true);
             })
             .catch(() => {
                 setOpenSnack(true);
@@ -155,7 +147,8 @@ function FormPontoTuristico(props) {
             descricao: descricao,
             localizacao: localizacao,
             cidade: cidade,
-            idEstado: idEstado
+            idEstado: idEstado,
+            dataInclusao: dataInclusao
         })
             .then((res) => {
                 setOpenSnack(true);

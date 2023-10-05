@@ -3,6 +3,7 @@ import { Grid, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
+import { convertDatetimaAsDate } from '../../../services/functions/utils'
 
 export default function Table(props) {
   const columnDefault = [
@@ -71,11 +72,15 @@ export default function Table(props) {
   }
 
   const columns = [...props.columns, ...columnDefault]
+  const converted = props.data.map(item => ({
+    ...item,
+    dataInclusao: convertDatetimaAsDate(item.dataInclusao)
+  }));
 
   return (
     <div style={{ height: '80vh', width: '100%', background: ' #fff', borderRadius: 5 }}>
       <DataGrid
-        rows={props.data}
+        rows={converted}
         columns={columns}
         initialState={{
           pagination: {
