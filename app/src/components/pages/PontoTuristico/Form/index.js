@@ -245,6 +245,7 @@ function FormPontoTuristico(props) {
                     variant="outlined"
                 />
                 <TextField
+                    multiline
                     disabled={props.action === "View" ? true : false}
                     required={true}
                     value={descricao}
@@ -256,6 +257,9 @@ function FormPontoTuristico(props) {
                     size="small"
                     label="Descrição"
                     variant="outlined"
+                    inputProps={{
+                        maxLength: 100
+                    }}
                 />
                 <TextField
                     disabled={props.action === "View" ? true : false}
