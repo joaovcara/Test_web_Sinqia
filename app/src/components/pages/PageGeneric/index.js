@@ -38,8 +38,11 @@ function PageGeneric(props) {
             <AddIcon fontSize='small' />
           </Button>
         </div>
-        <TextField onChange={handleInputChange} value={textSearch} style={{ width: "40%" }} variant='filled' size='small' label="Pesquisar" id="fullWidth" />
+        
       </Grid>
+      <Grid container paddingTop={"2%"}>
+        <TextField onChange={handleInputChange} value={textSearch} style={{ width: "40%", minWidth: '100%' }} variant='filled' size='small' label="Pesquisar" id="fullWidth" />
+      </Grid>      
       <Grid container marginTop="10px">
         <Table
           data={dataList}

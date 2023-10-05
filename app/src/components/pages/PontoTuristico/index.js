@@ -20,19 +20,22 @@ function PagePontoTuristico() {
     {
       field: 'nome',
       headerName: 'Nome',
-      width: 400
+      flex: 1,
+      minWidth: 250
     },
     {
       field: 'localizacao',
       headerName: 'Localização',
-      flex: 1
+      flex: 1,
+      minWidth: 250
     },
     {
       field: 'dataInclusao',
       headerName: 'Data Inclusão',
-      width: 200,
+      flex: 1,
       sortable: true,
-      hide: true
+      hide: true,
+      minWidth: 200
     },
   ];
 
