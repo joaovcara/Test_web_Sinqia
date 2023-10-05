@@ -2,11 +2,6 @@
 using Domain.Interfaces;
 using Domain.Models;
 using Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
@@ -22,11 +17,13 @@ namespace Infrastructure.Repository
 
         public async Task<int> Insert(PontoTuristico obj)
         {
+            obj.DataInclusao = DateTime.Now;
+
             using (var conn = _dbSession.Connection)
             {
-                string sql = $@"INSERT INTO {Entidade} (Nome, Descricao, Localizacao, Cidade, IdEstado) 
+                string sql = $@"INSERT INTO {Entidade} (Nome, Descricao, Localizacao, Cidade, DataInclusao, IdEstado) 
                                 OUTPUT INSERTED.Id
-                                VALUES (@Nome, @Descricao, @Localizacao, @Cidade, @IdEstado) ";
+                                VALUES (@Nome, @Descricao, @Localizacao, @Cidade, @DataInclusao, @IdEstado) ";
                 int result = await conn.ExecuteScalarAsync<int>(sql, obj);
                 return result;
             }
@@ -58,7 +55,7 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection)
             {
-                string sql = $@"SELECT * FROM {Entidade} WHERE Id = @Id";
+                string sql = $@"SELECT Id, Nome, Descricao, Localizacao, Cidade, DataInclusao, IdEstado  FROM {Entidade} WHERE Id = @Id";
                 PontoTuristico pontoTuristico = await conn.QueryFirstOrDefaultAsync<PontoTuristico>(sql, new { id });
                 return pontoTuristico;
             }
@@ -68,7 +65,7 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection)
             {
-                string sql = $@"SELECT * FROM {Entidade}";
+                string sql = $@"SELECT Id, Nome, Descricao, Localizacao, Cidade, DataInclusao, IdEstado FROM {Entidade}";
                 List<PontoTuristico> pontoTuristico = (await conn.QueryAsync<PontoTuristico>(sql)).ToList();
                 return pontoTuristico;
             }

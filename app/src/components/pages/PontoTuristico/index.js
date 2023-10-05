@@ -20,12 +20,22 @@ function PagePontoTuristico() {
     {
       field: 'nome',
       headerName: 'Nome',
-      flex: 1
+      flex: 1,
+      minWidth: 250
     },
     {
-      field: 'descricao',
-      headerName: 'Descrição',
-      flex: 1
+      field: 'localizacao',
+      headerName: 'Localização',
+      flex: 1,
+      minWidth: 250
+    },
+    {
+      field: 'dataInclusao',
+      headerName: 'Data Inclusão',
+      flex: 1,
+      sortable: true,
+      hide: true,
+      minWidth: 200
     },
   ];
 
@@ -38,7 +48,7 @@ function PagePontoTuristico() {
         setListPontoTuristico(result.data);
       });
 
-      setUpdateGrid(false)
+    setUpdateGrid(false)
   }
 
   return (
@@ -52,11 +62,11 @@ function PagePontoTuristico() {
       openClose={openModal}
       funcOpenClose={setOpenModal}
       content={
-        <FormPontoTuristico 
-          setOpenModal={setOpenModal} 
-          action={action} 
-          objClicked={objPontoTuristicoClicked} 
-          listPontoTuristico={listPontoTuristico} 
+        <FormPontoTuristico
+          setOpenModal={setOpenModal}
+          action={action}
+          objClicked={objPontoTuristicoClicked}
+          listPontoTuristico={listPontoTuristico}
           setListPontoTuristico={setListPontoTuristico}
           updateList={setUpdateGrid}
         />

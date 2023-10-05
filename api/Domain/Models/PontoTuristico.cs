@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models
 {
@@ -18,8 +13,11 @@ namespace Domain.Models
         [Display(Name = "Localização")]
         public string? Localizacao { get; set; }
 
-        [Display(Name = "CIdade")]
+        [Display(Name = "Cidade")]
         public string? Cidade { get; set; }
+
+        [Display(Name = "Data Inclusão")]
+        public DateTime? DataInclusao { get; set; }
 
         public int IdEstado { get; set; }
     }
