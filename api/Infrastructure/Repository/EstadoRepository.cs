@@ -52,7 +52,7 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection)
             {
-                string sql = $@"SELECT * FROM {Entidade} WHERE Id = @Id";
+                string sql = $@"SELECT Id, Sigla, Descricao FROM {Entidade} WHERE Id = @Id";
                 Estado estado = await conn.QueryFirstOrDefaultAsync<Estado>(sql, new { id });
                 return estado;
             }
@@ -62,7 +62,7 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection) 
             {
-                string sql = $@"SELECT * FROM {Entidade}";
+                string sql = $@"SELECT Id, Sigla, Descricao FROM {Entidade}";
                 List<Estado> estados = (await conn.QueryAsync<Estado>(sql)).ToList();
                 return estados;
             }

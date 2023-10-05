@@ -55,7 +55,7 @@ namespace Infrastructure.Repository
         {
             using (var conn = _dbSession.Connection)
             {
-                string sql = $@"SELECT * FROM {Entidade} WHERE Id = @Id";
+                string sql = $@"SELECT Id, Nome, Descricao, Localizacao, Cidade, DataInclusao, IdEstado  FROM {Entidade} WHERE Id = @Id";
                 PontoTuristico pontoTuristico = await conn.QueryFirstOrDefaultAsync<PontoTuristico>(sql, new { id });
                 return pontoTuristico;
             }

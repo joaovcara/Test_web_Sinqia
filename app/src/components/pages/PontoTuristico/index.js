@@ -24,8 +24,8 @@ function PagePontoTuristico() {
       width: 300
     },
     {
-      field: 'descricao',
-      headerName: 'Descrição',
+      field: 'localizacao',
+      headerName: 'Localização',
       flex: 1
     },
     {
