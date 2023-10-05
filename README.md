@@ -1,35 +1,25 @@
-<div style="display: flex; justify-content: center">
-  <p style="font-size: 25px; font-weight: bold">CRUD para teste técnico de desenvolvimento web</p>
-</div>
+<h1>
+  Crud com Net 6.0 e React JS
+</h1>
 
 ## Objetivo
 <div style="display: flex; justify-content: center">  
   <p style="text-align: left">Este projeto tem como foco principal, apresentar minhas habilidades e competências em desenvolvimento de software.</p>
 </div>
 
+## Vídeo de Demonstração
+
+https://github.com/joaovcara/Test_web_Sinqia/assets/62843342/bb60afba-c062-474f-b8e8-435fc5e88dac
+
 ## Tecnologias
 <div style="display: flex; justify-content: center">
-  <div style="margin: 10px;">
     <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/html.png?raw=true" height="85px"/>
-  </div>
-  <div style="margin: 10px;">
     <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/css.png?raw=true" height="85px"/>
-  </div>
-  <div style="margin: 10px;">
     <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/js.png?raw=true" height="85px"/>
-  </div>
-  <div style="margin: 10px;">
     <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/csharp.png?raw=true" height="85px"/>
-  </div>
-    <div style="margin: 10px;">
     <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/sql.png?raw=true" height="85px"/>
-  </div>
-  <div style="margin: 10px;">
     <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/react.png?raw=true" height="85px"/>
-  </div>
-  <div style="margin: 10px;">
     <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/mui.png?raw=true" height="85px"/>
-  </div>
 </div>
 
 ## Instruções para executar o projeto  
@@ -38,7 +28,7 @@
   <ul>
     <li>Visual Studio 2022</li>
     <li>Visual Studio Code</li>
-    <li>SqlServer 2022</li>  
+    <li>SQL Server Management Studio</li>  
   <ul>
 </div>
 
@@ -86,4 +76,8 @@ $ git clone https://github.com/joaovcara/Test_web_Sinqia.git
 
   <p>Seguindo estes passos o projeto estará rodando API e FrontEnd com banco  de dados já criado, sendo posível acessar no navegador.</p>
 
+## Imagens
+ <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/photos/HomeSystem.png?raw=true" height="auto"/>
+ <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/photos/PontoTuristico.png?raw=true" height="auto"/>
+  
   
