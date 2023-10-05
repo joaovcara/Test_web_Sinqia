@@ -76,7 +76,7 @@ $ git clone https://github.com/joaovcara/Test_web_Sinqia.git
   $ npm start
   ```
 
-  <p>Seguindo estes passos o projeto estará rodando API e FrontEnd com banco  de dados já criado, sendo posível acessar no navegador.</p>
+  <p>Seguindo estes passos o projeto estará rodando API e FrontEnd com banco  de dados já criado, sendo possível acessar no navegador.</p>
 
 ## Imagens
  <img alt="CSharp" src="https://github.com/joaovcara/Test_web_Sinqia/blob/main/app/src/assets/img/photos/HomeSystem.png?raw=true" height="auto"/>
