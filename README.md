@@ -27,7 +27,7 @@ https://github.com/joaovcara/Test_web_Sinqia/assets/62843342/bb60afba-c062-474f-
   <p>Ferramentas utilizadas</p>
   <ul>
     <li>Visual Studio 2022</li>
-    <li>Visual Studio Code</li>
+    <li>VS Code</li>
     <li>SQL Server Management Studio</li>  
   <ul>
 </div>
